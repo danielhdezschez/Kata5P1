@@ -2,13 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package kata5;
+package control;
 
+import model.Mail;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.sql.PreparedStatement;
+
+
 
 /**
  *
@@ -71,5 +76,18 @@ public class Conexion {
         System.out.println(e.getMessage());
     }
   }
+    
+    public void insertarEmail(List<Mail> emails) {
+        for(Mail email : emails) {
+        String sql = "INSERT INTO EMAIL(Mail) VALUES(?)";
+        try (
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, email.getMail());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    }
     
 }
